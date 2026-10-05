@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CloudGuard - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="brand">
+        🛡️ CloudGuard
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}"
+           class="active">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('reports') }}">
+            Reports
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Security Dashboard</h1>
+
+            <p class="subtitle">
+                A simple overview of what is happening in your cloud security system.
+            </p>
+
+        </div>
+
+        <div class="status" id="status">
+            Connecting to cloud database...
+        </div>
+
+    </div>
+
+
+    <!-- ALERTS -->
+
+    <div id="alerts"></div>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <section class="cards">
+
+        <div class="card">
+
+            <p>Total Security Events</p>
+
+            <h3 id="total">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card">
+
+            <p>Failed Login Attempts</p>
+
+            <h3 id="failed">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card">
+
+            <p>Honeypot Visits</p>
+
+            <h3 id="honeypot">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card danger">
+
+            <p>High / Critical Events</p>
+
+            <h3 id="highrisk">
+                0
+            </h3>
+
+        </div>
+
+    </section>
+
+
+    <!-- CHART + DEMO -->
+
+    <section class="two-col">
+
+
+        <!-- RISK OVERVIEW -->
+
+        <div class="panel">
+
+            <div class="panel-head">
+
+                <div>
+
+                    <h3>
+                        Risk Overview
+                    </h3>
+
+                    <p class="panel-description">
+                        How many security events fall into each risk level.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-wrap">
+
+                <canvas id="riskChart"></canvas>
+
+            </div>
+
+
+            <div class="risk-guide">
+
+                <div class="risk-item">
+
+                    <span class="risk-dot low-dot"></span>
+
+                    <b>Low</b>
+
+                    <br>
+
+                    Normal activity
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <span class="risk-dot medium-dot"></span>
+
+                    <b>Medium</b>
+
+                    <br>
+
+                    Needs attention
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <span class="risk-dot high-dot"></span>
+
+                    <b>High</b>
+
+                    <br>
+
+                    Suspicious
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <span class="risk-dot critical-dot"></span>
+
+                    <b>Critical</b>
+
+                    <br>
+
+                    Very suspicious
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DEMO CONTROLS -->
+
+        <div class="panel">
+
+            <h3>
+                Try a Security Event
+            </h3>
+
+            <p class="panel-description">
+
+                These buttons create safe demonstration records
+                in your cloud database.
+
+            </p>
+
+
+            <div class="demo-note">
+
+                💡 These do NOT perform real attacks.
+                They only create sample security events for your project demo.
+
+            </div>
+
+
+            <button
+                class="btn demo-btn"
+                onclick="simulate('failed-login')">
+
+                + Simulate Failed Login
+
+            </button>
+
+
+            <button
+                class="btn demo-btn"
+                onclick="simulate('honeypot')">
+
+                + Simulate Honeypot Visit
+
+            </button>
+
+
+            <button
+                class="btn demo-btn btn-red"
+                onclick="simulate('critical')">
+
+                + Simulate Critical Activity
+
+            </button>
+
+
+            <h3 style="margin-top: 24px;">
+
+                Honeypot Pages
+
+            </h3>
+
+
+            <p class="panel-description">
+
+                These are fake pages designed to attract
+                and record suspicious visits.
+
+            </p>
+
+
+            <div class="honeypot-list">
+
+                <a
+                    class="honey-link"
+                    href="{{ url_for('honeypot_login') }}"
+                    target="_blank">
+
+                    <span>
+                        Fake Login Page
+                    </span>
+
+                    <span>
+                        Open →
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="honey-link"
+                    href="{{ url_for('honeypot_admin') }}"
+                    target="_blank">
+
+                    <span>
+                        Fake Admin Panel
+                    </span>
+
+                    <span>
+                        Open →
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="honey-link"
+                    href="{{ url_for('honeypot_api') }}"
+                    target="_blank">
+
+                    <span>
+                        Fake API
+                    </span>
+
+                    <span>
+                        Open →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RECENT EVENTS -->
+
+    <section class="panel">
+
+        <div class="panel-head">
+
+            <div>
+
+                <h3>
+                    Recent Security Events
+                </h3>
+
+                <p class="panel-description">
+
+                    Latest activity recorded in the cloud database.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+
+                        <th>Time</th>
+
+                        <th>IP Address</th>
+
+                        <th>Activity</th>
+
+                        <th>Endpoint</th>
+
+                        <th>Risk Level</th>
+
+                        <th>Score</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="events-body">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+</script>
+
+
+<script src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+</body>
+
+</html>

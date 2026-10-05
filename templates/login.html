@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        CloudGuard - Login
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="center-page">
+
+
+<div class="login-box">
+
+
+    <div class="logo">
+        🛡️
+    </div>
+
+
+    <h1>
+        CloudGuard
+    </h1>
+
+
+    <p class="subtitle">
+
+        Cloud Security Monitoring
+        & Honeypot System
+
+    </p>
+
+
+    {% if error %}
+
+        <div class="error-msg">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <form
+        method="POST"
+        action="{{ url_for('login') }}">
+
+
+        <label>
+            Username
+        </label>
+
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            required
+            autofocus>
+
+
+        <label>
+            Password
+        </label>
+
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            required>
+
+
+        <button
+            type="submit"
+            class="btn">
+
+            Sign in to Dashboard
+
+        </button>
+
+
+    </form>
+
+
+    <p class="hint">
+
+        Demo login:
+        <b>admin / admin123</b>
+
+    </p>
+
+
+</div>
+
+
+</body>
+
+</html>

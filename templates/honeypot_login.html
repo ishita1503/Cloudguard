@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Server Administration Portal
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="fake center-page">
+
+
+<div class="fake-box">
+
+
+    <h2>
+        Server Administration Portal
+    </h2>
+
+
+    <p>
+        Authorized personnel only
+    </p>
+
+
+    {% if message %}
+
+        <div class="fake-error">
+            {{ message }}
+        </div>
+
+    {% endif %}
+
+
+    <form
+        method="POST"
+        action="{{ url_for('honeypot_login') }}">
+
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username">
+
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password">
+
+
+        <button type="submit">
+
+            Sign In
+
+        </button>
+
+
+    </form>
+
+
+    <p class="decoy-note">
+
+        CloudGuard honeypot:
+        this is a decoy page.
+        Your visit has been logged.
+
+    </p>
+
+
+</div>
+
+
+</body>
+
+</html>

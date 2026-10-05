@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Internal API
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="fake">
+
+
+<div class="fake-header">
+
+    Internal API v1
+
+</div>
+
+
+<div class="fake-content">
+
+
+<pre class="fake-json">{
+  "status": "error",
+  "code": 401,
+  "message": "API key required",
+  "endpoints": [
+    "/v1/users",
+    "/v1/config",
+    "/v1/backup"
+  ]
+}</pre>
+
+
+<p class="decoy-note">
+
+    CloudGuard honeypot:
+    this is a decoy API with no real data.
+    Your visit has been logged.
+
+</p>
+
+
+</div>
+
+
+</body>
+
+</html>
